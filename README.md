@@ -23,13 +23,13 @@ Esta é a nova source da DeathCore que estamos atualizando devagar, adicionando 
 
 ##Arquivos Necessários
 
-[dbc](#)
+[dbc](https://mega.co.nz/#!P5N1XaBS!JhbH_2mImI8q0ZstYBcoW2Bq3wSlZtB7LP9S1vY9yRg)
 
-[maps](#)
+[maps](https://mega.co.nz/#!WxVnSb7Z!-IGtSFJzzLPr1eBwMVcCxogpUzrG4GL6sAh63Ej_Leo)
 
-[mmaps](#)
+[mmaps](https://mega.co.nz/#!KlkyHCJL!tH1xAj1aqfagJiDGXCZ43qJEyoL-HSC7zX6amkMvsGU)
 
-[vmaps](#)
+[vmaps](https://mega.co.nz/#!mtME0b6Y!kwjNbTsfctkgsD-kHghw7Za9Rfl298B7Ju9TEpEdHBo)
 
 ##Warlords Of Draenor - Client
  
