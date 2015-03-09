@@ -1566,12 +1566,8 @@ void SpellMgr::LoadSpellLearnSpells()
         }
     }
 
-    for (uint32 i = 0; i < sSpellLearnSpellStore.GetNumRows(); ++i)
+    for (SpellLearnSpellEntry const* spellLearnSpell : sSpellLearnSpellStore)
     {
-        SpellLearnSpellEntry const* spellLearnSpell = sSpellLearnSpellStore.LookupEntry(i);
-        if (!spellLearnSpell)
-            continue;
-
         if (!GetSpellInfo(spellLearnSpell->SpellID))
             continue;
 
@@ -3704,10 +3700,6 @@ void SpellMgr::LoadSpellInfoCorrections()
             case 40166: // Introspection
             case 40167: // Introspection
                 spellInfo->Attributes |= SPELL_ATTR0_NEGATIVE_1;
-                break;
-            case 2378: // Minor Fortitude
-                spellInfo->ManaCost = 0;
-                spellInfo->ManaPerSecond = 0;
                 break;
             // Stonecore spells
             case 95284: // Teleport (from entrance to Slabhide)

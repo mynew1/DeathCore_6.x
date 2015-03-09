@@ -1,6 +1,6 @@
-################################################
-# DeathCore World Server configuration file    #
-################################################
+#############################################
+# DeathCore World Server configuration file #
+#############################################
 [worldserver]
 
 ###################################################################################################
@@ -68,7 +68,7 @@ RealmID = 1
 #        Example:     "@prefix@/share/deathcore"
 #        Default:     "."
 
-DataDir = "data"
+DataDir = "."
 
 #
 #    LogsDir
@@ -77,7 +77,7 @@ DataDir = "data"
 #                     Logs directory must exists, or log file creation will be disabled.
 #        Default:     "" - (Log files will be stored in the current path)
 
-LogsDir = "logs/Server"
+LogsDir = ""
 
 #
 #    LoginDatabaseInfo
@@ -1040,9 +1040,9 @@ BeepAtStart = 1
 #        Description: Message of the Day, displayed at login.
 #                     Use '@' for a newline and be sure to escape special characters.
 #        Example:     "Welcome to John\'s Server@This server runs on DeathCore."
-#        Default:     "Welcome to a DeathCore."
+#        Default:     "Welcome to a DeathCore server."
 
-Motd = "Welcome to a DeathCore 5.4.8 (Alpha)"
+Motd = "Welcome to a DeathCore 6.x (Alpha)."
 
 #
 #    Server.LoginInfo
@@ -3242,6 +3242,7 @@ Logger.sql.sql=5,Console DBErrors
 #Logger.scripts.ai=3,Console Server
 #Logger.server.bnetserver=3,Console Server
 #Logger.spells=3,Console Server
+#Logger.spells.periodic=3,Console Server
 #Logger.sql.dev=3,Console Server
 #Logger.sql.driver=3,Console Server
 #Logger.warden=3,Console Server

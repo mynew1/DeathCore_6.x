@@ -18,10 +18,7 @@
 #include "Common.h"
 #include "DB2StorageLoader.h"
 #include "Database/DatabaseEnv.h"
-
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
+#include "Log.h"
 
 DB2FileLoader::DB2FileLoader()
 {
@@ -169,14 +166,14 @@ bool DB2FileLoader::Load(const char *filename, const char *fmt)
     for (uint32 i = 1; i < fieldCount; i++)
     {
         fieldsOffset[i] = fieldsOffset[i - 1];
-        if (fmt[i - 1] == 'b' || fmt[i - 1] == 'X')
+        if (fmt[i - 1] == 'b')
             fieldsOffset[i] += 1;
         else
             fieldsOffset[i] += 4;
     }
 
-    data = new unsigned char[recordSize*recordCount+stringSize];
-    stringTable = data + recordSize*recordCount;
+    data = new unsigned char[recordSize * recordCount + stringSize];
+    stringTable = data + recordSize * recordCount;
 
     if (fread(data, recordSize * recordCount + stringSize, 1, f) != 1)
     {
@@ -368,10 +365,6 @@ char* DB2FileLoader::AutoProduceStringsArrayHolders(const char* format, char* da
                     offset += sizeof(char*);
                     break;
                 }
-                case FT_NA:
-                case FT_NA_BYTE:
-                case FT_SORT:
-                    break;
                 default:
                     ASSERT(false, "unknown format character %c", format[x]);
             }
@@ -426,7 +419,7 @@ char* DB2FileLoader::AutoProduceStrings(const char* format, char* dataTable, uin
     return stringPool;
 }
 
-char* DB2DatabaseLoader::Load(const char* format, int32 preparedStatement, uint32& records, char**& indexTable, char*& stringHolders, std::list<char*>& stringPool)
+char* DB2DatabaseLoader::Load(const char* format, uint32 preparedStatement, uint32& records, char**& indexTable, char*& stringHolders, std::list<char*>& stringPool)
 {
     // Even though this query is executed only once, prepared statement is used to send data from mysql server in binary format
     PreparedQueryResult result = HotfixDatabase.Query(HotfixDatabase.GetPreparedStatement(preparedStatement));
@@ -434,7 +427,7 @@ char* DB2DatabaseLoader::Load(const char* format, int32 preparedStatement, uint3
         return nullptr;
 
     uint32 const fieldCount = strlen(format);
-    if (fieldCount + 1 /*VerifiedBuild*/ != result->GetFieldCount())
+    if (fieldCount != result->GetFieldCount())
         return nullptr;
 
     // get struct size and index pos
@@ -567,9 +560,11 @@ char* DB2DatabaseLoader::Load(const char* format, int32 preparedStatement, uint3
     return dataTable;
 }
 
-void DB2DatabaseLoader::LoadStrings(const char* format, int32 preparedStatement, uint32 locale, char**& indexTable, std::list<char*>& stringPool)
+void DB2DatabaseLoader::LoadStrings(const char* format, uint32 preparedStatement, uint32 locale, char**& indexTable, std::list<char*>& stringPool)
 {
-    PreparedQueryResult result = HotfixDatabase.Query(HotfixDatabase.GetPreparedStatement(preparedStatement));
+    PreparedStatement* stmt = HotfixDatabase.GetPreparedStatement(preparedStatement);
+    stmt->setString(0, localeNames[locale]);
+    PreparedQueryResult result = HotfixDatabase.Query(stmt);
     if (!result)
         return;
 
@@ -590,35 +585,40 @@ void DB2DatabaseLoader::LoadStrings(const char* format, int32 preparedStatement,
         uint32 indexValue = fields[0].GetUInt32();
 
         // Attempt to overwrite existing data
-        char* dataValue = indexTable[indexValue];
-        for (uint32 x = 0; x < fieldCount; x++)
+        if (char* dataValue = indexTable[indexValue])
         {
-            switch (format[x])
+            for (uint32 x = 0; x < fieldCount; x++)
             {
-                case FT_FLOAT:
-                case FT_IND:
-                case FT_INT:
-                    offset += 4;
-                    break;
-                case FT_BYTE:
-                    offset += 1;
-                    break;
-                case FT_STRING:
+                switch (format[x])
                 {
-                    // fill only not filled entries
-                    LocalizedString* db2str = *(LocalizedString**)(&dataValue[offset]);
-                    if (db2str->Str[locale] == nullStr)
-                        if (char* str = AddLocaleString(db2str, locale, fields[1 + stringFieldNumInRecord].GetString()))
-                            stringPool.push_back(str);
+                    case FT_FLOAT:
+                    case FT_IND:
+                    case FT_INT:
+                        offset += 4;
+                        break;
+                    case FT_BYTE:
+                        offset += 1;
+                        break;
+                    case FT_STRING:
+                    {
+                        // fill only not filled entries
+                        LocalizedString* db2str = *(LocalizedString**)(&dataValue[offset]);
+                        if (db2str->Str[locale] == nullStr)
+                            if (char* str = AddLocaleString(db2str, locale, fields[1 + stringFieldNumInRecord].GetString()))
+                                stringPool.push_back(str);
 
-                    ++stringFieldNumInRecord;
-                    offset += sizeof(char*);
-                    break;
+                        ++stringFieldNumInRecord;
+                        offset += sizeof(char*);
+                        break;
+                    }
                 }
             }
-        }
 
-        ASSERT(offset == recordSize);
+            ASSERT(offset == recordSize);
+        }
+        else
+            TC_LOG_ERROR("sql.sql", "Hotfix locale table for storage %s references row that does not exist %u!", _storageName.c_str(), indexValue);
+
     } while (result->NextRow());
 
     return;

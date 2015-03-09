@@ -2696,6 +2696,13 @@ void WorldObject::GetCreatureListWithEntryInGrid(std::list<Creature*>& creatureL
     cell.Visit(pair, visitor, *(this->GetMap()), *this, maxSearchRange);
 }
 
+void WorldObject::GetPlayerListInGrid(std::list<Player*>& playerList, float maxSearchRange) const
+{
+    Trinity::AnyPlayerInObjectRangeCheck checker(this, maxSearchRange);
+    Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(this, playerList, checker);
+    this->VisitNearbyWorldObject(maxSearchRange, searcher);
+}
+
 /*
 namespace Trinity
 {
@@ -3030,7 +3037,7 @@ bool WorldObject::InSamePhase(WorldObject const* obj) const
 
 void WorldObject::PlayDistanceSound(uint32 sound_id, Player* target /*= NULL*/)
 {
-    WorldPacket data(SMSG_PLAY_OBJECT_SOUND, 4 + 8);
+    WorldPacket data(SMSG_PLAY_SPEAKERBOT_SOUND, 4 + 8);
     data << uint32(sound_id);
     data << GetGUID();
     if (target)

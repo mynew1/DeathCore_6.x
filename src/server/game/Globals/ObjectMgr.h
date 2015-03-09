@@ -461,7 +461,6 @@ typedef std::unordered_map<ObjectGuid::LowType, GameObjectData> GameObjectDataCo
 typedef std::map<TempSummonGroupKey, std::vector<TempSummonData> > TempSummonDataContainer;
 typedef std::unordered_map<uint32, CreatureLocale> CreatureLocaleContainer;
 typedef std::unordered_map<uint32, GameObjectLocale> GameObjectLocaleContainer;
-typedef std::unordered_map<uint32, ItemLocale> ItemLocaleContainer;
 typedef std::unordered_map<uint32, QuestLocale> QuestLocaleContainer;
 typedef std::unordered_map<uint32, NpcTextLocale> NpcTextLocaleContainer;
 typedef std::unordered_map<uint32, PageTextLocale> PageTextLocaleContainer;
@@ -671,7 +670,7 @@ struct DungeonEncounter
 };
 
 typedef std::list<DungeonEncounter const*> DungeonEncounterList;
-typedef std::unordered_map<uint32, DungeonEncounterList> DungeonEncounterContainer;
+typedef std::unordered_map<uint64, DungeonEncounterList> DungeonEncounterContainer;
 
 class PlayerDumpReader;
 
@@ -698,7 +697,7 @@ class ObjectMgr
 
         typedef std::unordered_map<uint32, uint32> AreaTriggerScriptContainer;
 
-        typedef std::unordered_map<uint32, AccessRequirement*> AccessRequirementContainer;
+        typedef std::unordered_map<uint64, AccessRequirement*> AccessRequirementContainer;
 
         typedef std::unordered_map<uint32, RepRewardRate > RepRewardRateContainer;
         typedef std::unordered_map<uint32, ReputationOnKillEntry> RepOnKillContainer;
@@ -810,7 +809,7 @@ class ObjectMgr
 
         AccessRequirement const* GetAccessRequirement(uint32 mapid, Difficulty difficulty) const
         {
-            AccessRequirementContainer::const_iterator itr = _accessRequirementStore.find(MAKE_PAIR32(mapid, difficulty));
+            AccessRequirementContainer::const_iterator itr = _accessRequirementStore.find(MAKE_PAIR64(mapid, difficulty));
             if (itr != _accessRequirementStore.end())
                 return itr->second;
             return NULL;
@@ -870,7 +869,7 @@ class ObjectMgr
 
         DungeonEncounterList const* GetDungeonEncounterList(uint32 mapId, Difficulty difficulty)
         {
-            std::unordered_map<uint32, DungeonEncounterList>::const_iterator itr = _dungeonEncounterStore.find(MAKE_PAIR32(mapId, difficulty));
+            DungeonEncounterContainer::const_iterator itr = _dungeonEncounterStore.find(MAKE_PAIR64(mapId, difficulty));
             if (itr != _dungeonEncounterStore.end())
                 return &itr->second;
             return NULL;
@@ -960,7 +959,6 @@ class ObjectMgr
         void LoadItemTemplates();
         void LoadItemTemplateAddon();
         void LoadItemScriptNames();
-        void LoadItemLocales();
         void LoadQuestLocales();
         void LoadNpcTextLocales();
         void LoadPageTextLocales();
@@ -1041,7 +1039,7 @@ class ObjectMgr
 
         ExclusiveQuestGroups mExclusiveQuestGroups;
 
-        MailLevelReward const* GetMailLevelReward(uint32 level, uint32 raceMask)
+        MailLevelReward const* GetMailLevelReward(uint8 level, uint32 raceMask)
         {
             MailLevelRewardContainer::const_iterator map_itr = _mailLevelRewardStore.find(level);
             if (map_itr == _mailLevelRewardStore.end())
@@ -1106,12 +1104,6 @@ class ObjectMgr
         {
             GameObjectLocaleContainer::const_iterator itr = _gameObjectLocaleStore.find(entry);
             if (itr == _gameObjectLocaleStore.end()) return NULL;
-            return &itr->second;
-        }
-        ItemLocale const* GetItemLocale(uint32 entry) const
-        {
-            ItemLocaleContainer::const_iterator itr = _itemLocaleStore.find(entry);
-            if (itr == _itemLocaleStore.end()) return NULL;
             return &itr->second;
         }
         QuestLocale const* GetQuestLocale(uint32 entry) const
@@ -1426,7 +1418,6 @@ class ObjectMgr
         TempSummonDataContainer _tempSummonDataStore;
 
         ItemTemplateContainer _itemTemplateStore;
-        ItemLocaleContainer _itemLocaleStore;
         QuestLocaleContainer _questLocaleStore;
         NpcTextLocaleContainer _npcTextLocaleStore;
         PageTextLocaleContainer _pageTextLocaleStore;

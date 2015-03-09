@@ -96,15 +96,6 @@ WorldPacket const* WorldPackets::Query::QueryCreatureResponse::Write()
 void WorldPackets::Query::QueryPlayerName::Read()
 {
     _worldPacket >> Player;
-
-    Hint.VirtualRealmAddress.HasValue = _worldPacket.ReadBit();
-    Hint.NativeRealmAddress.HasValue = _worldPacket.ReadBit();
-
-    if (Hint.VirtualRealmAddress.HasValue)
-        _worldPacket >> Hint.VirtualRealmAddress.Value;
-
-    if (Hint.NativeRealmAddress.HasValue)
-        _worldPacket >> Hint.NativeRealmAddress.Value;
 }
 
 ByteBuffer& operator<<(ByteBuffer& data, WorldPackets::Query::PlayerGuidLookupHint const& lookupHint)
@@ -267,14 +258,8 @@ WorldPacket const* WorldPackets::Query::DBReply::Write()
     _worldPacket << TableHash;
     _worldPacket << RecordID;
     _worldPacket << Timestamp;
-
-    size_t sizePos = _worldPacket.wpos();
-    _worldPacket << int32(0); // size of next block
-
-    if (Data)
-        Data->WriteRecord(RecordID, Locale, _worldPacket);
-
-    _worldPacket.put<int32>(sizePos, _worldPacket.wpos() - sizePos - sizeof(int32));
+    _worldPacket << uint32(Data.size());
+    _worldPacket.append(Data);
 
     return &_worldPacket;
 }

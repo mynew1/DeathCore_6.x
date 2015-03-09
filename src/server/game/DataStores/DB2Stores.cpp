@@ -23,36 +23,41 @@
 #include "World.h"
 #include <functional>
 
-DB2Storage<BroadcastTextEntry>              sBroadcastTextStore(BroadcastTextEntryfmt, HOTFIX_SEL_BROADCAST_TEXT);
-DB2Storage<CurvePointEntry>                 sCurvePointStore(CurvePointEntryfmt);
-DB2Storage<HolidaysEntry>                   sHolidaysStore(HolidaysEntryfmt);
-DB2Storage<ItemEntry>                       sItemStore(Itemfmt);
-DB2Storage<ItemAppearanceEntry>             sItemAppearanceStore(ItemAppearanceEntryfmt);
-DB2Storage<ItemBonusEntry>                  sItemBonusStore(ItemBonusEntryfmt);
-DB2Storage<ItemBonusTreeNodeEntry>          sItemBonusTreeNodeStore(ItemBonusTreeNodeEntryfmt);
-DB2Storage<ItemCurrencyCostEntry>           sItemCurrencyCostStore(ItemCurrencyCostfmt);
-DB2Storage<ItemExtendedCostEntry>           sItemExtendedCostStore(ItemExtendedCostEntryfmt);
-DB2Storage<ItemEffectEntry>                 sItemEffectStore(ItemEffectEntryfmt);
-DB2Storage<ItemModifiedAppearanceEntry>     sItemModifiedAppearanceStore(ItemModifiedAppearanceEntryfmt);
-DB2Storage<ItemSparseEntry>                 sItemSparseStore(ItemSparsefmt);
-DB2Storage<ItemXBonusTreeEntry>             sItemXBonusTreeStore(ItemXBonusTreeEntryfmt);
-DB2Storage<KeyChainEntry>                   sKeyChainStore(KeyChainfmt);
-DB2Storage<MountEntry>                      sMountStore(Mountfmt);
-DB2Storage<OverrideSpellDataEntry>          sOverrideSpellDataStore(OverrideSpellDataEntryfmt);
-DB2Storage<PhaseGroupEntry>                 sPhaseGroupStore(PhaseGroupEntryfmt);
-DB2Storage<SpellAuraRestrictionsEntry>      sSpellAuraRestrictionsStore(SpellAuraRestrictionsEntryfmt);
-DB2Storage<SpellCastingRequirementsEntry>   sSpellCastingRequirementsStore(SpellCastingRequirementsEntryfmt);
-DB2Storage<SpellClassOptionsEntry>          sSpellClassOptionsStore(SpellClassOptionsEntryfmt);
-DB2Storage<SpellLearnSpellEntry>            sSpellLearnSpellStore(SpellLearnSpellEntryfmt);
-DB2Storage<SpellMiscEntry>                  sSpellMiscStore(SpellMiscEntryfmt);
-DB2Storage<SpellPowerEntry>                 sSpellPowerStore(SpellPowerEntryfmt);
-SpellPowerBySpellIDMap                      sSpellPowerBySpellIDStore;
-DB2Storage<SpellReagentsEntry>              sSpellReagentsStore(SpellReagentsEntryfmt);
-DB2Storage<SpellRuneCostEntry>              sSpellRuneCostStore(SpellRuneCostEntryfmt);
-DB2Storage<SpellTotemsEntry>                sSpellTotemsStore(SpellTotemsEntryfmt);
-DB2Storage<TaxiNodesEntry>                  sTaxiNodesStore(TaxiNodesEntryfmt);
-DB2Storage<TaxiPathEntry>                   sTaxiPathStore(TaxiPathEntryfmt);
-DB2Storage<TaxiPathNodeEntry>               sTaxiPathNodeStore(TaxiPathNodeEntryfmt, HOTFIX_SEL_TAXI_PATH_NODE);
+DB2Storage<AreaGroupEntry>                  sAreaGroupStore("AreaGroup.db2", AreaGroupFormat, HOTFIX_SEL_AREA_GROUP);
+DB2Storage<AreaGroupMemberEntry>            sAreaGroupMemberStore("AreaGroupMember.db2", AreaGroupMemberFormat, HOTFIX_SEL_AREA_GROUP_MEMBER);
+DB2Storage<BroadcastTextEntry>              sBroadcastTextStore("BroadcastText.db2", BroadcastTextFormat, HOTFIX_SEL_BROADCAST_TEXT);
+DB2Storage<CurrencyTypesEntry>              sCurrencyTypesStore("CurrencyTypes.db2", CurrencyTypesFormat, HOTFIX_SEL_CURRENCY_TYPES);
+DB2Storage<CurvePointEntry>                 sCurvePointStore("CurvePoint.db2", CurvePointFormat, HOTFIX_SEL_CURVE_POINT);
+DB2Storage<HolidaysEntry>                   sHolidaysStore("Holidays.db2", HolidaysEntryFormat, HOTFIX_SEL_HOLIDAYS);
+DB2Storage<ItemAppearanceEntry>             sItemAppearanceStore("ItemAppearance.db2", ItemAppearanceFormat, HOTFIX_SEL_ITEM_APPEARANCE);
+DB2Storage<ItemBonusEntry>                  sItemBonusStore("ItemBonus.db2", ItemBonusFormat, HOTFIX_SEL_ITEM_BONUS);
+DB2Storage<ItemBonusTreeNodeEntry>          sItemBonusTreeNodeStore("ItemBonusTreeNode.db2", ItemBonusTreeNodeFormat, HOTFIX_SEL_ITEM_BONUS_TREE_NODE);
+DB2Storage<ItemCurrencyCostEntry>           sItemCurrencyCostStore("ItemCurrencyCost.db2", ItemCurrencyCostFormat, HOTFIX_SEL_ITEM_CURRENCY_COST);
+DB2Storage<ItemEffectEntry>                 sItemEffectStore("ItemEffect.db2", ItemEffectFormat, HOTFIX_SEL_ITEM_EFFECT);
+DB2Storage<ItemEntry>                       sItemStore("Item.db2", ItemFormat, HOTFIX_SEL_ITEM);
+DB2Storage<ItemExtendedCostEntry>           sItemExtendedCostStore("ItemExtendedCost.db2", ItemExtendedCostFormat, HOTFIX_SEL_ITEM_EXTENDED_COST);
+DB2Storage<ItemModifiedAppearanceEntry>     sItemModifiedAppearanceStore("ItemModifiedAppearance.db2", ItemModifiedAppearanceFormat, HOTFIX_SEL_ITEM_MODIFIED_APPEARANCE);
+DB2Storage<ItemSparseEntry>                 sItemSparseStore("Item-sparse.db2", ItemSparseFormat, HOTFIX_SEL_ITEM_SPARSE);
+DB2Storage<ItemXBonusTreeEntry>             sItemXBonusTreeStore("ItemXBonusTree.db2", ItemXBonusTreeFormat, HOTFIX_SEL_ITEM_X_BONUS_TREE);
+DB2Storage<KeyChainEntry>                   sKeyChainStore("KeyChain.db2", KeyChainFormat, HOTFIX_SEL_KEY_CHAIN);
+DB2Storage<MountEntry>                      sMountStore("Mount.db2", MountFormat, HOTFIX_SEL_MOUNT);
+DB2Storage<OverrideSpellDataEntry>          sOverrideSpellDataStore("OverrideSpellData.db2", OverrideSpellDataFormat, HOTFIX_SEL_OVERRIDE_SPELL_DATA);
+DB2Storage<PhaseXPhaseGroupEntry>           sPhaseXPhaseGroupStore("PhaseXPhaseGroup.db2", PhaseXPhaseGroupFormat, HOTFIX_SEL_PHASE_GROUP);
+DB2Storage<SoundEntriesEntry>               sSoundEntriesStore("SoundEntries.db2", SoundEntriesFormat, HOTFIX_SEL_SOUND_ENTRIES);
+DB2Storage<SpellAuraRestrictionsEntry>      sSpellAuraRestrictionsStore("SpellAuraRestrictions.db2", SpellAuraRestrictionsFormat, HOTFIX_SEL_SPELL_AURA_RESTRICTIONS);
+DB2Storage<SpellCastingRequirementsEntry>   sSpellCastingRequirementsStore("SpellCastingRequirements.db2", SpellCastingRequirementsFormat, HOTFIX_SEL_SPELL_CASTING_REQUIREMENTS);
+DB2Storage<SpellClassOptionsEntry>          sSpellClassOptionsStore("SpellClassOptions.db2", SpellClassOptionsFormat, HOTFIX_SEL_SPELL_CLASS_OPTIONS);
+DB2Storage<SpellLearnSpellEntry>            sSpellLearnSpellStore("SpellLearnSpell.db2", SpellLearnSpellFormat, HOTFIX_SEL_SPELL_LEARN_SPELL);
+DB2Storage<SpellMiscEntry>                  sSpellMiscStore("SpellMisc.db2", SpellMiscFormat, HOTFIX_SEL_SPELL_MISC);
+DB2Storage<SpellPowerEntry>                 sSpellPowerStore("SpellPower.db2", SpellPowerFormat, HOTFIX_SEL_SPELL_POWER);
+DB2Storage<SpellPowerDifficultyEntry>       sSpellPowerDifficultyStore("SpellPowerDifficulty.db2", SpellPowerDifficultyFormat, HOTFIX_SEL_SPELL_POWER_DIFFICULTY);
+DB2Storage<SpellReagentsEntry>              sSpellReagentsStore("SpellReagents.db2", SpellReagentsFormat, HOTFIX_SEL_SPELL_REAGENTS);
+DB2Storage<SpellRuneCostEntry>              sSpellRuneCostStore("SpellRuneCost.db2", SpellRuneCostFormat, HOTFIX_SEL_SPELL_RUNE_COST);
+DB2Storage<SpellTotemsEntry>                sSpellTotemsStore("SpellTotems.db2", SpellTotemsFormat, HOTFIX_SEL_SPELL_TOTEMS);
+DB2Storage<TaxiNodesEntry>                  sTaxiNodesStore("TaxiNodes.db2", TaxiNodesFormat, HOTFIX_SEL_TAXI_NODES);
+DB2Storage<TaxiPathEntry>                   sTaxiPathStore("TaxiPath.db2", TaxiPathFormat, HOTFIX_SEL_TAXI_PATH);
+DB2Storage<TaxiPathNodeEntry>               sTaxiPathNodeStore("TaxiPathNode.db2", TaxiPathNodeFormat, HOTFIX_SEL_TAXI_PATH_NODE);
+
 TaxiMask                                    sTaxiNodesMask;
 TaxiMask                                    sOldContinentsNodesMask;
 TaxiMask                                    sHordeTaxiNodesMask;
@@ -66,19 +71,18 @@ typedef std::list<std::string> DB2StoreProblemList;
 uint32 DB2FilesCount = 0;
 
 template<class T>
-inline void LoadDB2(uint32& availableDb2Locales, DB2StoreProblemList& errlist, DB2Manager::StorageMap& stores, DB2Storage<T>& storage, std::string const& db2_path, std::string const& filename)
+inline void LoadDB2(uint32& availableDb2Locales, DB2StoreProblemList& errlist, DB2Manager::StorageMap& stores, DB2Storage<T>* storage, std::string const& db2_path)
 {
     // compatibility format and C++ structure sizes
-    ASSERT(DB2FileLoader::GetFormatRecordSize(storage.GetFormat()) == sizeof(T),
+    ASSERT(DB2FileLoader::GetFormatRecordSize(storage->GetFormat()) == sizeof(T),
         "Size of '%s' set by format string (%u) not equal size of C++ structure (" SZFMTD ").",
-        filename.c_str(), DB2FileLoader::GetFormatRecordSize(storage.GetFormat()), sizeof(T));
+        storage->GetFileName().c_str(), DB2FileLoader::GetFormatRecordSize(storage->GetFormat()), sizeof(T));
 
     ++DB2FilesCount;
 
-    std::string db2_filename = db2_path + filename;
-    if (storage.Load(db2_filename.c_str(), uint32(sWorld->GetDefaultDbcLocale())))
+    if (storage->Load(db2_path, uint32(sWorld->GetDefaultDbcLocale())))
     {
-        storage.LoadFromDB();
+        storage->LoadFromDB();
 
         for (uint32 i = 0; i < TOTAL_LOCALES; ++i)
         {
@@ -86,174 +90,178 @@ inline void LoadDB2(uint32& availableDb2Locales, DB2StoreProblemList& errlist, D
                 continue;
 
             if (availableDb2Locales & (1 << i))
-            {
-                std::string localizedName(db2_path);
-                localizedName.append(localeNames[i]);
-                localizedName.push_back('/');
-                localizedName.append(filename);
-
-                if (!storage.LoadStringsFrom(localizedName.c_str(), i))
+                if (!storage->LoadStringsFrom((db2_path + localeNames[i] + '/'), i))
                     availableDb2Locales &= ~(1 << i);             // mark as not available for speedup next checks
-            }
 
-            storage.LoadStringsFromDB(i);
+            storage->LoadStringsFromDB(i);
         }
-
     }
     else
     {
         // sort problematic db2 to (1) non compatible and (2) nonexistent
-        if (FILE* f = fopen(db2_filename.c_str(), "rb"))
+        if (FILE* f = fopen((db2_path + storage->GetFileName()).c_str(), "rb"))
         {
             std::ostringstream stream;
-            stream << db2_filename << " exists, and has " << storage.GetFieldCount() << " field(s) (expected " << strlen(storage.GetFormat()) << "). Extracted file might be from wrong client version.";
+            stream << storage->GetFileName() << " exists, and has " << storage->GetFieldCount() << " field(s) (expected " << strlen(storage->GetFormat())
+                << "). Extracted file might be from wrong client version.";
             std::string buf = stream.str();
             errlist.push_back(buf);
             fclose(f);
         }
         else
-            errlist.push_back(db2_filename);
+            errlist.push_back(storage->GetFileName());
     }
 
-    stores[storage.GetHash()] = &storage;
+    stores[storage->GetHash()] = storage;
 }
 
 void DB2Manager::LoadStores(std::string const& dataPath)
 {
+    uint32 oldMSTime = getMSTime();
+
     std::string db2Path = dataPath + "dbc/";
 
     DB2StoreProblemList bad_db2_files;
     uint32 availableDb2Locales = 0xFF;
 
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sBroadcastTextStore,        db2Path,    "BroadcastText.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sCurvePointStore,           db2Path,    "CurvePoint.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sHolidaysStore,             db2Path,    "Holidays.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemStore,                 db2Path,    "Item.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemAppearanceStore,       db2Path,    "ItemAppearance.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemBonusStore,            db2Path,    "ItemBonus.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemBonusTreeNodeStore,    db2Path,    "ItemBonusTreeNode.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemCurrencyCostStore,     db2Path,    "ItemCurrencyCost.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemExtendedCostStore,     db2Path,    "ItemExtendedCost.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemEffectStore,           db2Path,    "ItemEffect.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemModifiedAppearanceStore, db2Path,  "ItemModifiedAppearance.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemSparseStore,           db2Path,    "Item-sparse.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sItemXBonusTreeStore,       db2Path,    "ItemXBonusTree.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sKeyChainStore,             db2Path,    "KeyChain.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sMountStore,                db2Path,    "Mount.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sOverrideSpellDataStore,    db2Path,    "OverrideSpellData.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sPhaseGroupStore,           db2Path,    "PhaseXPhaseGroup.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sSpellAuraRestrictionsStore, db2Path,   "SpellAuraRestrictions.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sSpellCastingRequirementsStore, db2Path, "SpellCastingRequirements.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sSpellClassOptionsStore,    db2Path,    "SpellClassOptions.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sSpellLearnSpellStore,      db2Path,    "SpellLearnSpell.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sSpellMiscStore,            db2Path,    "SpellMisc.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sSpellPowerStore,           db2Path,    "SpellPower.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sSpellReagentsStore,        db2Path,    "SpellReagents.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sSpellRuneCostStore,        db2Path,    "SpellRuneCost.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sSpellTotemsStore,          db2Path,    "SpellTotems.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sTaxiNodesStore,            db2Path,    "TaxiNodes.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sTaxiPathStore,             db2Path,    "TaxiPath.db2");
-    LoadDB2(availableDb2Locales, bad_db2_files, _stores, sTaxiPathNodeStore,         db2Path,    "TaxiPathNode.db2");
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sAreaGroupStore,                db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sAreaGroupMemberStore,          db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sBroadcastTextStore,            db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sCurrencyTypesStore,            db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sCurvePointStore,               db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sHolidaysStore,                 db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemAppearanceStore,           db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemBonusStore,                db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemBonusTreeNodeStore,        db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemCurrencyCostStore,         db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemEffectStore,               db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemExtendedCostStore,         db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemModifiedAppearanceStore,   db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemSparseStore,               db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemStore,                     db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sItemXBonusTreeStore,           db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sKeyChainStore,                 db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sMountStore,                    db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sOverrideSpellDataStore,        db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sPhaseXPhaseGroupStore,         db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSoundEntriesStore,             db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellAuraRestrictionsStore,    db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellCastingRequirementsStore, db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellClassOptionsStore,        db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellLearnSpellStore,          db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellMiscStore,                db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellPowerStore,               db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellReagentsStore,            db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellRuneCostStore,            db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sSpellTotemsStore,              db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sTaxiNodesStore,                db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sTaxiPathNodeStore,             db2Path);
+    LoadDB2(availableDb2Locales, bad_db2_files, _stores, &sTaxiPathStore,                 db2Path);
 
-    for (uint32 i = 0; i < sItemBonusStore.GetNumRows(); ++i)
-        if (ItemBonusEntry const* bonus = sItemBonusStore.LookupEntry(i))
-            _itemBonusLists[bonus->BonusListID].push_back(bonus);
+    for (AreaGroupMemberEntry const* areaGroupMember : sAreaGroupMemberStore)
+        _areaGroupMembers[areaGroupMember->AreaGroupID].push_back(areaGroupMember->AreaID);
 
-    for (uint32 i = 0; i < sItemBonusTreeNodeStore.GetNumRows(); ++i)
+    for (ItemBonusEntry const* bonus : sItemBonusStore)
+        _itemBonusLists[bonus->BonusListID].push_back(bonus);
+
+    for (ItemBonusTreeNodeEntry const* bonusTreeNode : sItemBonusTreeNodeStore)
     {
-        if (ItemBonusTreeNodeEntry const* bonusTreeNode = sItemBonusTreeNodeStore.LookupEntry(i))
+        uint32 bonusTreeId = bonusTreeNode->BonusTreeID;
+        while (bonusTreeNode)
         {
-            uint32 bonusTreeId = bonusTreeNode->BonusTreeID;
-            while (bonusTreeNode)
-            {
-                _itemBonusTrees[bonusTreeId].insert(bonusTreeNode);
-                bonusTreeNode = sItemBonusTreeNodeStore.LookupEntry(bonusTreeNode->SubTreeID);
-            }
+            _itemBonusTrees[bonusTreeId].insert(bonusTreeNode);
+            bonusTreeNode = sItemBonusTreeNodeStore.LookupEntry(bonusTreeNode->SubTreeID);
         }
     }
 
-    for (uint32 i = 0; i < sItemModifiedAppearanceStore.GetNumRows(); ++i)
-        if (ItemModifiedAppearanceEntry const* appearanceMod = sItemModifiedAppearanceStore.LookupEntry(i))
-            if (ItemAppearanceEntry const* appearance = sItemAppearanceStore.LookupEntry(appearanceMod->AppearanceID))
-                _itemDisplayIDs[appearanceMod->ItemID | (appearanceMod->AppearanceModID << 24)] = appearance->DisplayID;
+    for (ItemModifiedAppearanceEntry const* appearanceMod : sItemModifiedAppearanceStore)
+        if (ItemAppearanceEntry const* appearance = sItemAppearanceStore.LookupEntry(appearanceMod->AppearanceID))
+            _itemDisplayIDs[appearanceMod->ItemID | (appearanceMod->AppearanceModID << 24)] = appearance->DisplayID;
 
-    for (uint32 i = 0; i < sItemXBonusTreeStore.GetNumRows(); ++i)
-        if (ItemXBonusTreeEntry const* itemBonusTreeAssignment = sItemXBonusTreeStore.LookupEntry(i))
-            _itemToBonusTree.insert({ itemBonusTreeAssignment->ItemID, itemBonusTreeAssignment->BonusTreeID });
+    for (ItemXBonusTreeEntry const* itemBonusTreeAssignment : sItemXBonusTreeStore)
+        _itemToBonusTree.insert({ itemBonusTreeAssignment->ItemID, itemBonusTreeAssignment->BonusTreeID });
 
     {
         std::set<uint32> scalingCurves;
-        for (uint32 i = 0; i < sScalingStatDistributionStore.GetNumRows(); ++i)
-            if (ScalingStatDistributionEntry const* ssd = sScalingStatDistributionStore.LookupEntry(i))
-                scalingCurves.insert(ssd->ItemLevelCurveID);
+        for (ScalingStatDistributionEntry const* ssd : sScalingStatDistributionStore)
+            scalingCurves.insert(ssd->ItemLevelCurveID);
 
-        for (uint32 i = 0; i < sCurvePointStore.GetNumRows(); ++i)
-            if (CurvePointEntry const* curvePoint = sCurvePointStore.LookupEntry(i))
-                if (scalingCurves.count(curvePoint->CurveID))
-                    _heirloomCurvePoints[curvePoint->CurveID][curvePoint->Index] = curvePoint;
+        for (CurvePointEntry const* curvePoint : sCurvePointStore)
+            if (scalingCurves.count(curvePoint->CurveID))
+                _heirloomCurvePoints[curvePoint->CurveID][curvePoint->Index] = curvePoint;
     }
 
-    for (uint32 i = 0; i < sMountStore.GetNumRows(); ++i)
-        if (MountEntry const* mount = sMountStore.LookupEntry(i))
-            _mountsBySpellId[mount->SpellId] = mount;
+    for (MountEntry const* mount : sMountStore)
+        _mountsBySpellId[mount->SpellId] = mount;
 
-    for (uint32 i = 0; i < sPhaseGroupStore.GetNumRows(); ++i)
-        if (PhaseGroupEntry const* group = sPhaseGroupStore.LookupEntry(i))
-            if (PhaseEntry const* phase = sPhaseStore.LookupEntry(group->PhaseID))
-                _phasesByGroup[group->PhaseGroupID].insert(phase->ID);
+    for (PhaseXPhaseGroupEntry const* group : sPhaseXPhaseGroupStore)
+        if (PhaseEntry const* phase = sPhaseStore.LookupEntry(group->PhaseID))
+            _phasesByGroup[group->PhaseGroupID].insert(phase->ID);
 
-    for (uint32 i = 0; i < sSpellPowerStore.GetNumRows(); ++i)
-        if (SpellPowerEntry const* power = sSpellPowerStore.LookupEntry(i))
-            sSpellPowerBySpellIDStore[power->SpellID] = power;
+    for (SpellPowerEntry const* power : sSpellPowerStore)
+    {
+        if (SpellPowerDifficultyEntry const* powerDifficulty = sSpellPowerDifficultyStore.LookupEntry(power->ID))
+        {
+            std::vector<SpellPowerEntry const*>& powers = _spellPowerDifficulties[power->SpellID][powerDifficulty->DifficultyID];
+            if (powers.size() <= powerDifficulty->PowerIndex)
+                powers.resize(powerDifficulty->PowerIndex + 1);
 
-    for (uint32 i = 1; i < sTaxiPathStore.GetNumRows(); ++i)
-        if (TaxiPathEntry const* entry = sTaxiPathStore.LookupEntry(i))
-            sTaxiPathSetBySource[entry->From][entry->To] = TaxiPathBySourceAndDestination(entry->ID, entry->Cost);
+            powers[powerDifficulty->PowerIndex] = power;
+        }
+        else
+        {
+            std::vector<SpellPowerEntry const*>& powers = _spellPowers[power->SpellID];
+            if (powers.size() <= power->PowerIndex)
+                powers.resize(power->PowerIndex + 1);
+
+            powers[power->PowerIndex] = power;
+        }
+    }
+
+    for (TaxiPathEntry const* entry : sTaxiPathStore)
+        sTaxiPathSetBySource[entry->From][entry->To] = TaxiPathBySourceAndDestination(entry->ID, entry->Cost);
+
     uint32 pathCount = sTaxiPathStore.GetNumRows();
 
     // Calculate path nodes count
     std::vector<uint32> pathLength;
     pathLength.resize(pathCount);                           // 0 and some other indexes not used
-    for (uint32 i = 1; i < sTaxiPathNodeStore.GetNumRows(); ++i)
-    {
-        if (TaxiPathNodeEntry const* entry = sTaxiPathNodeStore.LookupEntry(i))
-        {
-            if (pathLength[entry->PathID] < entry->NodeIndex + 1)
-                pathLength[entry->PathID] = entry->NodeIndex + 1;
-        }
-    }
+    for (TaxiPathNodeEntry const* entry : sTaxiPathNodeStore)
+        if (pathLength[entry->PathID] < entry->NodeIndex + 1)
+            pathLength[entry->PathID] = entry->NodeIndex + 1;
 
     // Set path length
     sTaxiPathNodesByPath.resize(pathCount);                 // 0 and some other indexes not used
-    for (uint32 i = 1; i < sTaxiPathNodesByPath.size(); ++i)
+    for (uint32 i = 0; i < sTaxiPathNodesByPath.size(); ++i)
         sTaxiPathNodesByPath[i].resize(pathLength[i]);
 
     // fill data
-    for (uint32 i = 1; i < sTaxiPathNodeStore.GetNumRows(); ++i)
-        if (TaxiPathNodeEntry const* entry = sTaxiPathNodeStore.LookupEntry(i))
-            sTaxiPathNodesByPath[entry->PathID].set(entry->NodeIndex, entry);
+    for (TaxiPathNodeEntry const* entry : sTaxiPathNodeStore)
+        sTaxiPathNodesByPath[entry->PathID].set(entry->NodeIndex, entry);
 
     // Initialize global taxinodes mask
     // include existed nodes that have at least single not spell base (scripted) path
     {
+        if (sTaxiNodesStore.GetNumRows())
+        {
+            ASSERT(TaxiMaskSize >= ((sTaxiNodesStore.GetNumRows() - 1) / 8) + 1,
+                "TaxiMaskSize is not large enough to contain all taxi nodes! (current value %d, required %d)",
+                TaxiMaskSize, (((sTaxiNodesStore.GetNumRows() - 1) / 8) + 1));
+        }
+
         std::set<uint32> spellPaths;
-        for (uint32 i = 1; i < sSpellEffectStore.GetNumRows(); ++i)
-            if (SpellEffectEntry const* sInfo = sSpellEffectStore.LookupEntry (i))
-                if (sInfo->Effect == SPELL_EFFECT_SEND_TAXI)
-                    spellPaths.insert(sInfo->EffectMiscValue);
+        for (SpellEffectEntry const* sInfo : sSpellEffectStore)
+            if (sInfo->Effect == SPELL_EFFECT_SEND_TAXI)
+                spellPaths.insert(sInfo->EffectMiscValue);
 
         memset(sTaxiNodesMask, 0, sizeof(sTaxiNodesMask));
         memset(sOldContinentsNodesMask, 0, sizeof(sOldContinentsNodesMask));
         memset(sHordeTaxiNodesMask, 0, sizeof(sHordeTaxiNodesMask));
         memset(sAllianceTaxiNodesMask, 0, sizeof(sAllianceTaxiNodesMask));
         memset(sDeathKnightTaxiNodesMask, 0, sizeof(sDeathKnightTaxiNodesMask));
-        for (uint32 i = 1; i < sTaxiNodesStore.GetNumRows(); ++i)
+        for (TaxiNodesEntry const* node : sTaxiNodesStore)
         {
-            TaxiNodesEntry const* node = sTaxiNodesStore.LookupEntry(i);
-            if (!node)
-                continue;
-
-            TaxiPathSetBySource::const_iterator src_i = sTaxiPathSetBySource.find(i);
+            TaxiPathSetBySource::const_iterator src_i = sTaxiPathSetBySource.find(node->ID);
             if (src_i != sTaxiPathSetBySource.end() && !src_i->second.empty())
             {
                 bool ok = false;
@@ -272,8 +280,8 @@ void DB2Manager::LoadStores(std::string const& dataPath)
             }
 
             // valid taxi network node
-            uint8  field   = (uint8)((i - 1) / 8);
-            uint32 submask = 1 << ((i-1) % 8);
+            uint8  field = (uint8)((node->ID - 1) / 8);
+            uint32 submask = 1 << ((node->ID - 1) % 8);
 
             sTaxiNodesMask[field] |= submask;
             if (node->MountCreatureID[0] && node->MountCreatureID[0] != 32981)
@@ -284,11 +292,11 @@ void DB2Manager::LoadStores(std::string const& dataPath)
                 sDeathKnightTaxiNodesMask[field] |= submask;
 
             // old continent node (+ nodes virtually at old continents, check explicitly to avoid loading map files for zone info)
-            if (node->MapID < 2 || i == 82 || i == 83 || i == 93 || i == 94)
+            if (node->MapID < 2 || node->ID == 82 || node->ID == 83 || node->ID == 93 || node->ID == 94)
                 sOldContinentsNodesMask[field] |= submask;
 
             // fix DK node at Ebon Hold and Shadow Vault flight master
-            if (i == 315 || i == 333)
+            if (node->ID == 315 || node->ID == 333)
                 ((TaxiNodesEntry*)node)->MountCreatureID[1] = 32981;
         }
     }
@@ -317,7 +325,7 @@ void DB2Manager::LoadStores(std::string const& dataPath)
         exit(1);
     }
 
-    TC_LOG_INFO("misc", ">> Initialized %d DB2 data stores.", DB2FilesCount);
+    TC_LOG_INFO("server.loading", ">> Initialized %d DB2 data stores in %u ms", DB2FilesCount, GetMSTimeDiffToNow(oldMSTime));
 }
 
 DB2StorageBase const* DB2Manager::GetStorage(uint32 type) const
@@ -333,7 +341,7 @@ void DB2Manager::LoadHotfixData()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = HotfixDatabase.Query("SELECT TableHash, RecordID, `Timestamp` FROM hotfix_data");
+    QueryResult result = HotfixDatabase.Query("SELECT TableHash, RecordID, `Timestamp`, Deleted FROM hotfix_data");
 
     if (!result)
     {
@@ -355,6 +363,13 @@ void DB2Manager::LoadHotfixData()
         info.Timestamp = fields[2].GetUInt32();
         _hotfixData.push_back(info);
 
+        if (fields[3].GetBool())
+        {
+            auto itr = _stores.find(info.TableHash);
+            if (itr != _stores.end())
+                itr->second->EraseRecord(info.Entry);
+        }
+
         ++count;
     } while (result->NextRow());
 
@@ -370,6 +385,15 @@ time_t DB2Manager::GetHotfixDate(uint32 entry, uint32 type) const
                 ret = time_t(hotfix.Timestamp);
 
     return ret ? ret : time(NULL);
+}
+
+std::vector<uint32> DB2Manager::GetAreasForGroup(uint32 areaGroupId) const
+{
+    auto itr = _areaGroupMembers.find(areaGroupId);
+    if (itr != _areaGroupMembers.end())
+        return itr->second;
+
+    return std::vector<uint32>();
 }
 
 char const* DB2Manager::GetBroadcastTextValue(BroadcastTextEntry const* broadcastText, LocaleConstant locale /*= DEFAULT_LOCALE*/, uint8 gender /*= GENDER_MALE*/, bool forceGender /*= false*/)
@@ -407,21 +431,13 @@ uint32 DB2Manager::GetHeirloomItemLevel(uint32 curveId, uint32 level) const
     return uint32(previousItr->second->Y);  // Lowest scaling point
 }
 
-uint32 DB2Manager::GetItemDisplayId(uint32 itemId, uint32 appearanceModId) const
+DB2Manager::ItemBonusList DB2Manager::GetItemBonusList(uint32 bonusListId) const
 {
-    auto itr = _itemDisplayIDs.find(itemId | (appearanceModId << 24));
-    if (itr != _itemDisplayIDs.end())
+    auto itr = _itemBonusLists.find(bonusListId);
+    if (itr != _itemBonusLists.end())
         return itr->second;
 
-    // Fall back to unmodified appearance
-    if (appearanceModId)
-    {
-        itr = _itemDisplayIDs.find(itemId);
-        if (itr != _itemDisplayIDs.end())
-            return itr->second;
-    }
-
-    return 0;
+    return ItemBonusList();
 }
 
 std::set<uint32> DB2Manager::GetItemBonusTree(uint32 itemId, uint32 itemBonusTreeMod) const
@@ -445,13 +461,21 @@ std::set<uint32> DB2Manager::GetItemBonusTree(uint32 itemId, uint32 itemBonusTre
     return bonusListIDs;
 }
 
-DB2Manager::ItemBonusList DB2Manager::GetItemBonusList(uint32 bonusListId) const
+uint32 DB2Manager::GetItemDisplayId(uint32 itemId, uint32 appearanceModId) const
 {
-    auto itr = _itemBonusLists.find(bonusListId);
-    if (itr != _itemBonusLists.end())
+    auto itr = _itemDisplayIDs.find(itemId | (appearanceModId << 24));
+    if (itr != _itemDisplayIDs.end())
         return itr->second;
 
-    return ItemBonusList();
+    // Fall back to unmodified appearance
+    if (appearanceModId)
+    {
+        itr = _itemDisplayIDs.find(itemId);
+        if (itr != _itemDisplayIDs.end())
+            return itr->second;
+    }
+
+    return 0;
 }
 
 MountEntry const* DB2Manager::GetMount(uint32 spellId) const
@@ -470,4 +494,46 @@ std::set<uint32> DB2Manager::GetPhasesForGroup(uint32 group) const
         return itr->second;
 
     return std::set<uint32>();
+}
+
+std::vector<SpellPowerEntry const*> DB2Manager::GetSpellPowers(uint32 spellId, Difficulty difficulty /*= DIFFICULTY_NONE*/, bool* hasDifficultyPowers /*= nullptr*/) const
+{
+    std::vector<SpellPowerEntry const*> powers;
+
+    auto difficultyItr = _spellPowerDifficulties.find(spellId);
+    if (difficultyItr != _spellPowerDifficulties.end())
+    {
+        if (hasDifficultyPowers)
+            *hasDifficultyPowers = true;
+
+        DifficultyEntry const* difficultyEntry = sDifficultyStore.LookupEntry(difficulty);
+        while (difficultyEntry)
+        {
+            auto powerDifficultyItr = difficultyItr->second.find(difficultyEntry->ID);
+            if (powerDifficultyItr != difficultyItr->second.end())
+            {
+                if (powerDifficultyItr->second.size() > powers.size())
+                    powers.resize(powerDifficultyItr->second.size());
+
+                for (SpellPowerEntry const* difficultyPower : powerDifficultyItr->second)
+                    if (!powers[difficultyPower->PowerIndex])
+                        powers[difficultyPower->PowerIndex] = difficultyPower;
+            }
+
+            difficultyEntry = sDifficultyStore.LookupEntry(difficultyEntry->FallbackDifficultyID);
+        }
+    }
+
+    auto itr = _spellPowers.find(spellId);
+    if (itr != _spellPowers.end())
+    {
+        if (itr->second.size() > powers.size())
+            powers.resize(itr->second.size());
+
+        for (SpellPowerEntry const* power : itr->second)
+            if (!powers[power->PowerIndex])
+                powers[power->PowerIndex] = power;
+    }
+
+    return powers;
 }

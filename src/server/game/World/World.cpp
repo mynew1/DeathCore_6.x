@@ -1012,6 +1012,12 @@ void World::LoadConfigSettings(bool reload)
     }
 
     m_bool_configs[CONFIG_SAVE_RESPAWN_TIME_IMMEDIATELY] = sConfigMgr->GetBoolDefault("SaveRespawnTimeImmediately", true);
+    if (!m_bool_configs[CONFIG_SAVE_RESPAWN_TIME_IMMEDIATELY])
+    {
+        TC_LOG_WARN("server.loading", "SaveRespawnTimeImmediately triggers assertions when disabled, overridden to Enabled");
+        m_bool_configs[CONFIG_SAVE_RESPAWN_TIME_IMMEDIATELY] = true;
+    }
+
     m_bool_configs[CONFIG_WEATHER] = sConfigMgr->GetBoolDefault("ActivateWeather", true);
 
     m_int_configs[CONFIG_DISABLE_BREATHING] = sConfigMgr->GetIntDefault("DisableWaterBreath", SEC_CONSOLE);
@@ -1415,7 +1421,7 @@ void World::SetInitialWorldSettings()
             !MapManager::ExistMapAndVMap(530, 10349.6f, -6357.29f) ||
             !MapManager::ExistMapAndVMap(530, -3961.64f, -13931.2f))))
     {
-        TC_LOG_ERROR("server.loading", "Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map/*.vmtree/*.vmtile files in appropriate directories or correct the DataDir value in the worldserver.conf file.", m_dataPath.c_str(), m_dataPath.c_str());
+        TC_LOG_FATAL("server.loading", "Unable to load critical files - server shutting down !!!");
         exit(1);
     }
 
@@ -1450,6 +1456,12 @@ void World::SetInitialWorldSettings()
     LoadDBCStores(m_dataPath);
     sDB2Manager.LoadStores(m_dataPath);
 
+    TC_LOG_INFO("misc", "Loading hotfix info...");
+    sDB2Manager.LoadHotfixData();
+
+    // Close hotfix database - it is only used during DB2 loading
+    HotfixDatabase.Close();
+
     sSpellMgr->LoadPetFamilySpellsStore();
 
     TC_LOG_INFO("server.loading", "Loading SpellInfo store...");
@@ -1481,7 +1493,6 @@ void World::SetInitialWorldSettings()
     uint32 oldMSTime = getMSTime();
     sObjectMgr->LoadCreatureLocales();
     sObjectMgr->LoadGameObjectLocales();
-    sObjectMgr->LoadItemLocales();
     sObjectMgr->LoadQuestLocales();
     sObjectMgr->LoadNpcTextLocales();
     sObjectMgr->LoadPageTextLocales();
@@ -1951,9 +1962,6 @@ void World::SetInitialWorldSettings()
     InitCurrencyResetTime();
 
     LoadCharacterInfoStore();
-
-    TC_LOG_INFO("misc", "Loading hotfix info...");
-    sDB2Manager.LoadHotfixData();
 
     TC_LOG_INFO("server.loading", "Loading race and class expansion requirements...");
     sObjectMgr->LoadRaceAndClassExpansionRequirements();
@@ -2819,22 +2827,11 @@ void World::SendAutoBroadcast()
     if (abcenter == 0)
         sWorld->SendWorldText(LANG_AUTO_BROADCAST, msg.c_str());
     else if (abcenter == 1)
-    {
-        WorldPacket data(SMSG_NOTIFICATION, 2 + msg.length());
-        data.WriteBits(msg.length(), 13);
-        data.FlushBits();
-        data.WriteString(msg);
-        sWorld->SendGlobalMessage(&data);
-    }
+        sWorld->SendGlobalMessage(WorldPackets::Chat::PrintNotification(msg).Write());
     else if (abcenter == 2)
     {
         sWorld->SendWorldText(LANG_AUTO_BROADCAST, msg.c_str());
-
-        WorldPacket data(SMSG_NOTIFICATION, 2 + msg.length());
-        data.WriteBits(msg.length(), 13);
-        data.FlushBits();
-        data.WriteString(msg);
-        sWorld->SendGlobalMessage(&data);
+        sWorld->SendGlobalMessage(WorldPackets::Chat::PrintNotification(msg).Write());
     }
 
     TC_LOG_DEBUG("misc", "AutoBroadcast: '%s'", msg.c_str());
@@ -3128,7 +3125,7 @@ void World::ResetRandomBG()
 {
     TC_LOG_INFO("misc", "Random BG status reset for all characters.");
 
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_BATTLEGROUND_RANDOM);
+    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_BATTLEGROUND_RANDOM_ALL);
     CharacterDatabase.Execute(stmt);
 
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)

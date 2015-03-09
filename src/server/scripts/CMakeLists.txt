@@ -38,8 +38,6 @@ if(SCRIPTS)
   include(Maelstrom/CMakeLists.txt)
   include(Events/CMakeLists.txt)
   include(Pet/CMakeLists.txt)
-  include(Pandaria/CMakeLists.txt)
-  include(Draenor/CMakeLists.txt)
 endif()
 
 message(STATUS "SCRIPT PREPARATION COMPLETE")

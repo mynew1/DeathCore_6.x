@@ -794,17 +794,7 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPackets::Character::PlayerLogin&
         return;
     }
 
-    boost::system::error_code ignored_error;
-    boost::asio::ip::tcp::endpoint instanceAddress = realm.GetAddressForClient(boost::asio::ip::address::from_string(GetRemoteAddress(), ignored_error));
-    instanceAddress.port(sWorld->getIntConfig(CONFIG_PORT_INSTANCE));
-
-    WorldPackets::Auth::ConnectTo connectTo;
-    connectTo.Key = MAKE_PAIR64(GetAccountId(), CONNECTION_TYPE_INSTANCE);
-    connectTo.Serial = 1;
-    connectTo.Payload.Where = instanceAddress;
-    connectTo.Con = CONNECTION_TYPE_INSTANCE;
-
-    SendPacket(connectTo.Write());
+    SendConnectToInstance(WorldPackets::Auth::ConnectToSerial::WorldAttempt1);
 }
 
 void WorldSession::HandleContinuePlayerLogin()
@@ -824,6 +814,18 @@ void WorldSession::HandleContinuePlayerLogin()
     }
 
     _charLoginCallback = CharacterDatabase.DelayQueryHolder(holder);
+}
+
+void WorldSession::AbortLogin(WorldPackets::Character::LoginFailureReason reason)
+{
+    if (!PlayerLoading() || GetPlayer())
+    {
+        KickPlayer();
+        return;
+    }
+
+    m_playerLoading.Clear();
+    SendPacket(WorldPackets::Character::CharacterLoginFailed(reason).Write());
 }
 
 void WorldSession::HandleLoadScreenOpcode(WorldPackets::Character::LoadingScreenNotify& /*loadingScreenNotify*/)
@@ -1086,6 +1088,8 @@ void WorldSession::SendFeatureSystemStatus()
     features.ComplaintStatus = 2;
     features.ScrollOfResurrectionRequestsRemaining = 1;
     features.ScrollOfResurrectionMaxRequestsPerDay = 1;
+    features.UnkInt27 = 60;
+    features.UnkInt29 = 20;
     features.CfgRealmID = 2;
     features.CfgRealmRecID = 0;
     features.VoiceEnabled = false;
@@ -2332,8 +2336,9 @@ void WorldSession::HandleUndeleteCooldownStatusCallback(PreparedQueryResult resu
             if (result)
             {
                 uint32 lastUndelete = result->Fetch()[0].GetUInt32();
-                if (lastUndelete)
-                    cooldown = uint32(std::max<int32>(0, int32(lastUndelete) + maxCooldown - time(nullptr)));
+                uint32 now = uint32(time(nullptr));
+                if (lastUndelete + maxCooldown > now)
+                    cooldown = std::max<uint32>(0, lastUndelete + maxCooldown - now);
             }
 
             SendUndeleteCooldownStatusResponse(cooldown, maxCooldown);

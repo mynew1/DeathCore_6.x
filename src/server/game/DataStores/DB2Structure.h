@@ -32,6 +32,18 @@
 #define MAX_ITEM_PROTO_SOCKETS 3
 #define MAX_ITEM_PROTO_STATS  10
 
+struct AreaGroupEntry
+{
+    uint32      ID;                                                 // 0
+};
+
+struct AreaGroupMemberEntry
+{
+    uint32      ID;                                                 // 0
+    uint32      AreaGroupID;                                        // 1
+    uint32      AreaID;                                             // 2
+};
+
 struct BroadcastTextEntry
 {
     uint32 ID;
@@ -43,6 +55,21 @@ struct BroadcastTextEntry
     uint32 SoundID;
     uint32 UnkEmoteID;
     uint32 Type;
+};
+
+struct CurrencyTypesEntry
+{
+    uint32      ID;                                                 // 0
+    uint32      CategoryID;                                         // 1
+    LocalizedString* Name_lang;                                     // 2
+    LocalizedString* InventoryIcon[2];                              // 3-4
+    uint32      SpellWeight;                                        // 5
+    uint32      SpellCategory;                                      // 6
+    uint32      MaxQty;                                             // 7
+    uint32      MaxEarnablePerWeek;                                 // 8
+    uint32      Flags;                                              // 9
+    uint32      Quality;                                            // 10
+    LocalizedString* Description_lang;                              // 11
 };
 
 struct CurvePointEntry
@@ -62,25 +89,12 @@ struct HolidaysEntry
     uint32      Region;                                             // 27
     uint32      Looping;                                            // 28
     uint32      CalendarFlags[MAX_HOLIDAY_FLAGS];                   // 29-38
-    //uint32    HolidayNameID;                                      // 39 HolidayNames.dbc
-    //uint32    HolidayDescriptionID;                               // 40 HolidayDescriptions.dbc
+    uint32      HolidayNameID;                                      // 39 HolidayNames.dbc
+    uint32      HolidayDescriptionID;                               // 40 HolidayDescriptions.dbc
     LocalizedString* TextureFilename;                               // 41
     uint32      Priority;                                           // 42
     uint32      CalendarFilterType;                                 // 43 (-1 = Fishing Contest, 0 = Unk, 1 = Darkmoon Festival, 2 = Yearly holiday)
-    //uint32    Flags;                                              // 44 (0 = Darkmoon Faire, Fishing Contest and Wotlk Launch, rest is 1)
-};
-
-struct ItemEntry
-{
-    uint32      ID;                                                 // 0
-    uint32      Class;                                              // 1
-    uint32      SubClass;                                           // 2
-    int32       SoundOverrideSubclass;                              // 3
-    int32       Material;                                           // 4
-    uint32      InventoryType;                                      // 5
-    uint32      Sheath;                                             // 6
-    uint32      FileDataID;                                         // 7
-    uint32      GroupSoundsID;                                      // 8
+    uint32      Flags;                                              // 44 (0 = Darkmoon Faire, Fishing Contest and Wotlk Launch, rest is 1)
 };
 
 struct ItemAppearanceEntry
@@ -110,7 +124,7 @@ struct ItemBonusTreeNodeEntry
 
 struct ItemCurrencyCostEntry
 {
-    //uint32    ID;                                                 // 0
+    uint32      ID;                                                 // 0
     uint32      ItemId;                                             // 1
 };
 
@@ -127,25 +141,37 @@ struct ItemEffectEntry
     int32       CategoryCooldown;                                   // 8
 };
 
+struct ItemEntry
+{
+    uint32      ID;                                                 // 0
+    uint32      Class;                                              // 1
+    uint32      SubClass;                                           // 2
+    int32       SoundOverrideSubclass;                              // 3
+    int32       Material;                                           // 4
+    uint32      InventoryType;                                      // 5
+    uint32      Sheath;                                             // 6
+    uint32      FileDataID;                                         // 7
+    uint32      GroupSoundsID;                                      // 8
+};
+
 #define MAX_ITEM_EXT_COST_ITEMS         5
 #define MAX_ITEM_EXT_COST_CURRENCIES    5
 
 struct ItemExtendedCostEntry
 {
     uint32      ID;                                                 // 0 extended-cost entry id
-    uint32      RequiredHonorPoints;                                // 1 required honor points
-    uint32      RequiredArenaPoints;                                // 2 required arena points
     uint32      RequiredArenaSlot;                                  // 3 arena slot restrictions (min slot value)
-    uint32      RequiredItem[MAX_ITEM_EXT_COST_ITEMS];              // 4-8 required item id
-    uint32      RequiredItemCount[MAX_ITEM_EXT_COST_ITEMS];         // 9-13 required count of 1st item
-    uint32      RequiredPersonalArenaRating;                        // 14 required personal arena rating
-    uint32      ItemPurchaseGroup;                                  // 15
-    uint32      RequiredCurrency[MAX_ITEM_EXT_COST_CURRENCIES];     // 16-20 required curency id
-    uint32      RequiredCurrencyCount[MAX_ITEM_EXT_COST_CURRENCIES];// 21-25 required curency count
-    uint32      RequiredFactionId;
-    uint32      RequiredFactionStanding;
-    uint32      RequirementFlags;
-    uint32      RequiredAchievement;
+    uint32      RequiredItem[MAX_ITEM_EXT_COST_ITEMS];              // 3-6 required item id
+    uint32      RequiredItemCount[MAX_ITEM_EXT_COST_ITEMS];         // 7-11 required count of 1st item
+    uint32      RequiredPersonalArenaRating;                        // 12 required personal arena rating
+    uint32      ItemPurchaseGroup;                                  // 13
+    uint32      RequiredCurrency[MAX_ITEM_EXT_COST_CURRENCIES];     // 14-18 required curency id
+    uint32      RequiredCurrencyCount[MAX_ITEM_EXT_COST_CURRENCIES];// 19-23 required curency count
+    uint32      RequiredFactionId;                                  // 24
+    uint32      RequiredFactionStanding;                            // 25
+    uint32      RequirementFlags;                                   // 26
+    uint32      RequiredAchievement;                                // 27
+    uint32      RequiredMoney;                                      // 28
 };
 
 struct ItemModifiedAppearanceEntry
@@ -259,20 +285,42 @@ struct OverrideSpellDataEntry
 {
     uint32      ID;                                                 // 0
     uint32      SpellID[MAX_OVERRIDE_SPELL];                        // 1-10
-    //uint32    Flags;                                              // 11
-    //char*     PlayerActionbarFileDataID;                          // 12
+    uint32      Flags;                                              // 11
+    uint32      PlayerActionbarFileDataID;                          // 12
 };
 
-struct PhaseGroupEntry
+struct PhaseXPhaseGroupEntry
 {
     uint32      ID;
     uint32      PhaseID;
     uint32      PhaseGroupID;
 };
 
+struct SoundEntriesEntry
+{
+    uint32      ID;                                                 // 0
+    uint32      SoundType;                                          // 1
+    LocalizedString* Name;                                          // 2
+    uint32      FileDataID[20];                                     // 3-22
+    uint32      Freq[20];                                           // 23-42
+    float       VolumeFloat;                                        // 43
+    uint32      Flags;                                              // 44
+    float       MinDistance;                                        // 45
+    float       DistanceCutoff;                                     // 46
+    uint32      EAXDef;                                             // 47
+    uint32      SoundEntriesAdvancedID;                             // 48
+    float       VolumeVariationPlus;                                // 49
+    float       VolumeVariationMinus;                               // 50
+    float       PitchVariationPlus;                                 // 51
+    float       PitchVariationMinus;                                // 52
+    float       PitchAdjust;                                        // 53
+    uint32      DialogType;                                         // 54
+    uint32      BusOverwriteID;                                     // 55
+};
+
 struct SpellAuraRestrictionsEntry
 {
-    //uint32    ID;                                                 // 0
+    uint32      ID;                                                 // 0
     uint32      CasterAuraState;                                    // 1
     uint32      TargetAuraState;                                    // 2
     uint32      ExcludeCasterAuraState;                             // 3
@@ -285,12 +333,12 @@ struct SpellAuraRestrictionsEntry
 
 struct SpellCastingRequirementsEntry
 {
-    //uint32    ID;                                                 // 0
+    uint32      ID;                                                 // 0
     uint32      FacingCasterFlags;                                  // 1
-    //uint32    MinFactionID;                                       // 1
-    //uint32    MinReputation;                                      // 3
+    uint32      MinFactionID;                                       // 1
+    uint32      MinReputation;                                      // 3
     uint32      RequiredAreasID;                                    // 4
-    //uint32    RequiredAuraVision;                                 // 5
+    uint32      RequiredAuraVision;                                 // 5
     uint32      RequiresSpellFocus;                                 // 6
 };
 
@@ -335,7 +383,7 @@ struct SpellMiscEntry
     uint32      SpellIconID;                                        // 21
     uint32      ActiveIconID;                                       // 22
     uint32      SchoolMask;                                         // 23
-    //float     Unk;                                                // 24
+    float       MultistrikeSpeedMod;                                // 24
 };
 
 struct SpellPowerEntry
@@ -347,13 +395,21 @@ struct SpellPowerEntry
     uint32      ManaCost;                                           // 4
     uint32      ManaCostPerLevel;                                   // 5
     uint32      ManaCostPerSecond;                                  // 6
-    //uint32    Unk4;                                               // 7 (All 0 except one spell: 22570)
-    //uint32    Unk5;                                               // 8
-    //uint32    Unk6;                                               // 9
+    uint32      ManaCostAdditional;                                 // 7 Spell uses [ManaCost, ManaCost+ManaCostAdditional] power - affects tooltip parsing as multiplier on SpellEffectEntry::EffectPointsPerResource
+                                                                    //   only SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL, SPELL_EFFECT_WEAPON_PERCENT_DAMAGE, SPELL_EFFECT_WEAPON_DAMAGE, SPELL_EFFECT_NORMALIZED_WEAPON_DMG
+    uint32      PowerDisplayID;                                     // 8
+    uint32      UnitPowerBarID;                                     // 9
     float       ManaCostPercentage;                                 // 10
     float       ManaCostPercentagePerSecond;                        // 11
     uint32      RequiredAura;                                       // 12
-    //uint32    Unk9;                                               // 13
+    float       HealthCostPercentage;                               // 13
+};
+
+struct SpellPowerDifficultyEntry
+{
+    uint32      SpellPowerID;                                       // 0
+    uint32      DifficultyID;                                       // 1
+    uint32      PowerIndex;                                         // 2
 };
 
 #define MAX_SPELL_REAGENTS 8
@@ -363,19 +419,18 @@ struct SpellReagentsEntry
     uint32      ID;                                                 // 0
     int32       Reagent[MAX_SPELL_REAGENTS];                        // 1-8
     uint32      ReagentCount[MAX_SPELL_REAGENTS];                   // 9-16
-    //uint32    Unk1;                                               // 17
-    //uint32    Unk2;                                               // 18
+    uint32      CurrencyID;                                         // 17
+    uint32      CurrencyCount;                                      // 18
 };
 
 struct SpellRuneCostEntry
 {
     uint32      ID;                                                 // 0
-    uint32      RuneCost[3];                                        // 1-3 (0=blood, 1=frost, 2=unholy)
-    //uint32    Unk;                                                // 4 (All 0 except for 2 ids: 2510, 2748)
-    uint32      RunePowerGain;                                      // 5
+    uint32      RuneCost[4];                                        // 1-4 (0=blood, 1=unholy, 2=frost, 3=death)
+    uint32      RunicPower;                                         // 5
 
-    bool NoRuneCost() const { return RuneCost[0] == 0 && RuneCost[1] == 0 && RuneCost[2] == 0; }
-    bool NoRunicPowerGain() const { return RunePowerGain == 0; }
+    bool NoRuneCost() const { return RuneCost[0] == 0 && RuneCost[1] == 0 && RuneCost[2] == 0 && RuneCost[3] == 0; }
+    bool NoRunicPowerGain() const { return RunicPower == 0; }
 };
 
 #define MAX_SPELL_TOTEMS 2
@@ -383,7 +438,7 @@ struct SpellRuneCostEntry
 struct SpellTotemsEntry
 {
     uint32      ID;                                                 // 0
-    uint32      TotemCategory[MAX_SPELL_TOTEMS];                    // 1
+    uint32      RequiredTotemCategoryID[MAX_SPELL_TOTEMS];          // 1
     uint32      Totem[MAX_SPELL_TOTEMS];                            // 2
 };
 
@@ -395,8 +450,9 @@ struct TaxiNodesEntry
     LocalizedString* Name_lang;                                     // 5
     uint32           MountCreatureID[2];                            // 6-7
     uint32           ConditionID;                                   // 8
-    uint32           Flags;                                         // 9
-    float            MapOffset[2];                                  // 10-11
+    uint32           LearnableIndex;                                // 9 - some kind of index only for learnable nodes
+    uint32           Flags;                                         // 10
+    DBCPosition2D    MapOffset;                                     // 11-12
 };
 
 struct TaxiPathEntry
@@ -422,8 +478,6 @@ struct TaxiPathNodeEntry
 
 #pragma pack(pop)
 
-typedef std::map<uint32, SpellPowerEntry const*> SpellPowerBySpellIDMap;
-
 struct TaxiPathBySourceAndDestination
 {
     TaxiPathBySourceAndDestination() : ID(0), price(0) { }
@@ -446,7 +500,7 @@ struct TaxiPathNodePtr
 typedef Path<TaxiPathNodePtr, TaxiPathNodeEntry const> TaxiPathNodeList;
 typedef std::vector<TaxiPathNodeList> TaxiPathNodesByPath;
 
-#define TaxiMaskSize 114
+#define TaxiMaskSize 201
 typedef uint8 TaxiMask[TaxiMaskSize];
 
 #endif

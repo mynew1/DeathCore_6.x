@@ -1,10 +1,10 @@
 ## ![logo](http://i.imgur.com/DtFyyjd.png)
 
 
-# DeathCore 6.x.x - New Source - Scripts
+# DeathCore 6.x - New Source - Scripts
 
 
-`DeathCore_6.x`:[![Build Status](https://travis-ci.org/NoffearrDeathProjecT/DeathCore_6.x.svg)](https://travis-ci.org/NoffearrDeathProjecT/DeathCore_6.x)
+`DeathCore_6.x`:[![Build Status](https://travis-ci.org/NoffearrDeathProjecT/DeathCore_6.x.svg?branch=master)](https://travis-ci.org/NoffearrDeathProjecT/DeathCore_6.x)
 
 
 ##Informações Gerais do Projeto
@@ -23,22 +23,22 @@ Esta é a nova source da DeathCore que estamos atualizando devagar, adicionando 
 
 ##Arquivos Necessários
 
-[dbc](https://mega.co.nz/#!G8NSTRjR!3fBjtQLLXqDfYOAL9ig-BZYGcex85f-3KLopKiXS6D8)
+[dbc](#)
 
-[maps](https://mega.co.nz/#!Gk1x0biS!lKv0mmuqida4-hu3SA7NJZY37_-y6Y9f8ZjoPA8xa8g)
+[maps](#)
 
-[mmaps](https://mega.co.nz/#!q0FSwDzK!EiqbFTYqz_kBCGm0YJEs1P_zSRtMRNQjAaQ0Yg-timA)
+[mmaps](#)
 
-[vmaps](https://mega.co.nz/#!2kkAlLCT!V8RASugmPA-Cz2PAlU2-rXgNBFyTcnIPjQgshyQTtsY)
+[vmaps](#)
 
 ##Warlords Of Draenor - Client
  
-[DeathCore Client](https://mega.co.nz/#!jpkwSaDL!kWLNfzAnfipfNeYowaB1ECNzAq3ylnpFzgfi9tpioGE)
+[DeathCore Client](#)
 
 Observações:
 - O DeathCore Client será usado apenas para quem tem o cliente de qualquer versão anterior completa, basta extrai-lo na pasta do mesmo.
 
-[Cliente Completo - World of Warcraft: Warlords of Draenor - Build 19342](https://mega.co.nz/#!yw9gHaKI!7jznvt4b4A_c0LYxkZMk-ECaJayya4zYfLj081NEpPQ)
+[Cliente Completo - World of Warcraft: Warlords of Draenor - Build 19342](#)
 
 ##Databases
 

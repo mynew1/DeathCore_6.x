@@ -153,6 +153,7 @@ WorldPacket const* WorldPackets::Character::EnumCharactersResult::Write()
         _worldPacket.WriteBits(charInfo.Name.length(), 6);
         _worldPacket.WriteBit(charInfo.FirstLogin);
         _worldPacket.WriteBit(charInfo.BoostInProgress);
+        _worldPacket.WriteBits(charInfo.unkWod61x, 5);
         _worldPacket.WriteString(charInfo.Name);
     }
 
@@ -357,6 +358,12 @@ WorldPacket const* WorldPackets::Character::LoginVerifyWorld::Write()
     return &_worldPacket;
 }
 
+WorldPacket const* WorldPackets::Character::CharacterLoginFailed::Write()
+{
+    _worldPacket << uint8(Code);
+    return &_worldPacket;
+}
+
 WorldPacket const* WorldPackets::Character::LogoutResponse::Write()
 {
     _worldPacket << int32(LogoutResult);
@@ -393,4 +400,19 @@ WorldPacket const* WorldPackets::Character::InitialSetup::Write()
 void WorldPackets::Character::SetActionBarToggles::Read()
 {
     _worldPacket >> Mask;
+}
+
+void WorldPackets::Character::PlayedTimeClient::Read()
+{
+    TriggerScriptEvent = _worldPacket.ReadBit();
+}
+
+WorldPacket const* WorldPackets::Character::PlayedTime::Write()
+{
+    _worldPacket << int32(TotalTime);
+    _worldPacket << int32(LevelTime);
+    _worldPacket.WriteBit(TriggerEvent);
+    _worldPacket.FlushBits();
+
+    return &_worldPacket;
 }

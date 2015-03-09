@@ -250,7 +250,7 @@ struct ScriptedAI : public CreatureAI
     bool HealthAbovePct(uint32 pct) const { return me->HealthAbovePct(pct); }
 
     //Returns spells that meet the specified criteria from the creatures spell list
-    SpellInfo const* SelectSpell(Unit* target, uint32 school, uint32 mechanic, SelectTargetType targets, uint32 powerCostMin, uint32 powerCostMax, float rangeMin, float rangeMax, SelectEffect effect);
+    SpellInfo const* SelectSpell(Unit* target, uint32 school, uint32 mechanic, SelectTargetType targets, float rangeMin, float rangeMax, SelectEffect effect);
 
     void SetEquipmentSlots(bool loadDefault, int32 mainHand = EQUIP_NO_CHANGE, int32 offHand = EQUIP_NO_CHANGE, int32 ranged = EQUIP_NO_CHANGE);
 
@@ -423,5 +423,6 @@ Creature* GetClosestCreatureWithEntry(WorldObject* source, uint32 entry, float m
 GameObject* GetClosestGameObjectWithEntry(WorldObject* source, uint32 entry, float maxSearchRange);
 void GetCreatureListWithEntryInGrid(std::list<Creature*>& list, WorldObject* source, uint32 entry, float maxSearchRange);
 void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& list, WorldObject* source, uint32 entry, float maxSearchRange);
+void GetPlayerListInGrid(std::list<Player*>& list, WorldObject* source, float maxSearchRange);
 
 #endif // SCRIPTEDCREATURE_H_

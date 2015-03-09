@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2013-2015 DeathCore <http://www.noffearrdeathproject.net/>
- * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -79,9 +78,9 @@ int mainImpl(int argc, char** argv)
     TC_LOG_INFO("server.bnetserver", "%s (bnetserver)", _FULLVERSION);
     TC_LOG_INFO("server.bnetserver", "<Ctrl-C> to stop.\n");
 	TC_LOG_INFO("server.bnetserver", "	D E A T H");
-    TC_LOG_INFO("server.bnetserver", "              C O R E 6.X.X");
+    TC_LOG_INFO("server.bnetserver", "              C O R E 6.x");
     TC_LOG_INFO("server.bnetserver", "http://www.noffearrdeathproject.net \n");
-   TC_LOG_INFO("server.bnetserver", "Using configuration file %s.", configFile.c_str());
+    TC_LOG_INFO("server.bnetserver", "Using configuration file %s.", configFile.c_str());
     TC_LOG_INFO("server.bnetserver", "Using SSL version: %s (library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
     TC_LOG_INFO("server.bnetserver", "Using Boost version: %i.%i.%i", BOOST_VERSION / 100000, BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
 
