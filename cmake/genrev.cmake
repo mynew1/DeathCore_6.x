@@ -17,7 +17,7 @@ if(NOT BUILDDIR)
 endif()
 
 if(WITHOUT_GIT)
-  set(rev_date "08-03-2015 19:57:00 +1b6x")
+  set(rev_date "10-03-2015 19:57:00 +1b6x")
   set(rev_hash "DeathCore")
   set(rev_branch "Arquivo")
 else()
@@ -56,8 +56,8 @@ else()
     # No valid ways available to find/set the revision/hash, so let's force some defaults
     message(STATUS "
     Could not find a proper repository signature (hash) - you may need to pull tags with git fetch -t
-    Continuing anyway - note that the versionstring will be set to \"DeathCore 08-03-2015 19:57:00 (Arquivo)\"")
-    set(rev_date "08-03-2015 19:57:00 +1b6x")
+    Continuing anyway - note that the versionstring will be set to \"DeathCore 10-03-2015 19:57:00 (Arquivo)\"")
+    set(rev_date "10-03-2015 19:57:00 +1b6x")
     set(rev_hash "DeathCore")
     set(rev_branch "Arquivo")
   else()
