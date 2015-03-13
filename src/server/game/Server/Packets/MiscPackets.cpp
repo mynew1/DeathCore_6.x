@@ -354,3 +354,28 @@ WorldPacket const* WorldPackets::Misc::LevelUpInfo::Write()
 
     return &_worldPacket;
 }
+
+WorldPacket const* WorldPackets::Misc::PlayMusic::Write()
+{
+    _worldPacket << uint32(SoundKitID);
+
+    return &_worldPacket;
+}
+
+void WorldPackets::Misc::RandomRollClient::Read()
+{
+    _worldPacket >> Min;
+    _worldPacket >> Max;
+    _worldPacket >> PartyIndex;
+}
+
+WorldPacket const* WorldPackets::Misc::RandomRoll::Write()
+{
+    _worldPacket << Roller;
+    _worldPacket << RollerWowAccount;
+    _worldPacket << int32(Min);
+    _worldPacket << int32(Max);
+    _worldPacket << int32(Result);
+
+    return &_worldPacket;
+}

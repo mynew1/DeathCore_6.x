@@ -258,6 +258,18 @@ namespace WorldPackets
             uint8 ContainerId = 0;
         };
 
+        class SellResponse final : public ServerPacket
+        {
+        public:
+            SellResponse() : ServerPacket(SMSG_SELL_RESPONSE, 16 + 16 + 1) { }
+
+            WorldPacket const* Write() override;
+
+            ObjectGuid VendorGUID;
+            ObjectGuid ItemGUID;
+            SellResult Reason = SELL_ERR_UNK;
+        };
+
         ByteBuffer& operator>>(ByteBuffer& data, InvUpdate& invUpdate);
     }
 }

@@ -493,6 +493,43 @@ namespace WorldPackets
             std::array<int32, MAX_STATS> StatDelta;
             int32 Cp = 0;
         };
+
+        class PlayMusic final : public ServerPacket
+        {
+        public:
+            PlayMusic() : ServerPacket(SMSG_PLAY_MUSIC, 4) { }
+            PlayMusic(uint32 soundKitID) : ServerPacket(SMSG_PLAY_MUSIC, 4), SoundKitID(soundKitID) { }
+
+            WorldPacket const* Write() override;
+
+            uint32 SoundKitID = 0;
+        };
+        
+        class RandomRollClient final : public ClientPacket
+        {
+        public:
+            RandomRollClient(WorldPacket&& packet) : ClientPacket(CMSG_RANDOM_ROLL, std::move(packet)) { }
+
+            void Read() override;
+
+            int32 Min = 0;
+            int32 Max = 0;
+            uint8 PartyIndex = 0;
+        };
+
+        class RandomRoll final : public ServerPacket
+        {
+        public:
+            RandomRoll() : ServerPacket(SMSG_RANDOM_ROLL, 16 + 16 + 4 + 4 + 4) { }
+
+            WorldPacket const* Write() override;
+
+            ObjectGuid Roller;
+            ObjectGuid RollerWowAccount;
+            int32 Min = 0;
+            int32 Max = 0;
+            int32 Result = 0;
+        };
     }
 }
 
