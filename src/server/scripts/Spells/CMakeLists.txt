@@ -1,4 +1,4 @@
-# Copyright (C) 2013-2015 DeathCore <http://www.noffearrdeathproject.net/>
+# Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -25,6 +25,8 @@ set(scripts_STAT_SRCS
   Spells/spell_item.cpp
   Spells/spell_holiday.cpp
   Spells/spell_pet.cpp
+  Spells/spell_masteries.cpp 
+  Spells/spell_monk.cpp 
 )
 
 message("  -> Prepared: Spells")
