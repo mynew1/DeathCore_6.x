@@ -23,7 +23,7 @@ Esta é a nova source da DeathCore que estamos atualizando devagar, adicionando 
 
 ##Arquivos Necessários
 
-[dbc](https://mega.co.nz/#!P5N1XaBS!JhbH_2mImI8q0ZstYBcoW2Bq3wSlZtB7LP9S1vY9yRg)
+[dbc](https://mega.co.nz/#!i8NhhZbT!JhbH_2mImI8q0ZstYBcoW2Bq3wSlZtB7LP9S1vY9yRg)
 
 [maps](https://mega.co.nz/#!WxVnSb7Z!-IGtSFJzzLPr1eBwMVcCxogpUzrG4GL6sAh63Ej_Leo)
 
