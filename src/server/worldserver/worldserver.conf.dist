@@ -78,7 +78,7 @@ DataDir = "data"
 #                     Logs directory must exists, or log file creation will be disabled.
 #        Default:     "" - (Log files will be stored in the current path)
 
-LogsDir = "Logs/Server"
+LogsDir = "logs/Server"
 
 #
 #    LoginDatabaseInfo
@@ -1040,10 +1040,10 @@ BeepAtStart = 1
 #    Motd
 #        Description: Message of the Day, displayed at login.
 #                     Use '@' for a newline and be sure to escape special characters.
-#        Example:     "Welcome to John\'s Server@This server runs on DeathCore 6.x.x (Alpha)."
-#        Default:     "Welcome to a DeathCore 6.x.x (Alpha) server."
+#        Example:     "Welcome to John\'s Server@This server runs on DeathCore."
+#        Default:     "Welcome to a DeathCore server."
 
-Motd = "Welcome to a DeathCore 6.x.x (Alpha)"
+Motd = "Welcome to a DeathCore 6.x (Alpha)"
 
 #
 #    Server.LoginInfo
