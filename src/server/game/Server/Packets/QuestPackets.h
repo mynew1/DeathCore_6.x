@@ -406,36 +406,26 @@ namespace WorldPackets
             bool RespondToGiver = false;
         };
 
-        class SetQuestCompletedBit final : public ServerPacket
+        class QuestGiverAcceptQuest final : public ClientPacket
         {
         public:
-            SetQuestCompletedBit() : ServerPacket(SMSG_SET_QUEST_COMPLETED_BIT, 4 + 4) { }
+            QuestGiverAcceptQuest(WorldPacket&& packet) : ClientPacket(CMSG_QUESTGIVER_ACCEPT_QUEST, std::move(packet)) { }
 
-            WorldPacket const* Write() override;
+            void Read() override;
 
-            int32 Bit = 0;
+            ObjectGuid QuestGiverGUID;
             int32 QuestID = 0;
+            bool StartCheat = false;
         };
 
-        class ClearQuestCompletedBit final : public ServerPacket
+        class QuestLogRemoveQuest final : public ClientPacket
         {
         public:
-            ClearQuestCompletedBit() : ServerPacket(SMSG_CLEAR_QUEST_COMPLETED_BIT, 4 + 4) { }
+            QuestLogRemoveQuest(WorldPacket&& packet) : ClientPacket(CMSG_QUESTLOG_REMOVE_QUEST, std::move(packet)) { }
 
-            WorldPacket const* Write() override;
+            void Read() override;
 
-            int32 Bit = 0;
-            int32 QuestID = 0;
-        };
-
-        class ClearQuestCompletedBits final : public ServerPacket
-        {
-        public:
-            ClearQuestCompletedBits() : ServerPacket(SMSG_CLEAR_QUEST_COMPLETED_BITS, 4) { }
-
-            WorldPacket const* Write() override;
-
-            std::vector<int32> Qbits;
+            uint8 Entry = 0;
         };
     }
 }

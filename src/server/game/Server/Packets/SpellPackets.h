@@ -340,13 +340,13 @@ namespace WorldPackets
         class SpellFailure final : public ServerPacket
         {
         public:
-            SpellFailure() : ServerPacket(SMSG_SPELL_FAILURE, 16+4+1+1) { }
+            SpellFailure() : ServerPacket(SMSG_SPELL_FAILURE, 16+4+2+1) { }
 
             WorldPacket const* Write() override;
 
             ObjectGuid CasterUnit;
             uint32 SpellID  = 0;
-            uint8 Reason    = 0;
+            uint16 Reason   = 0;
             uint8 CastID    = 0;
         };
 
@@ -359,7 +359,7 @@ namespace WorldPackets
 
             ObjectGuid CasterUnit;
             uint32 SpellID  = 0;
-            uint16 Reason   = 0;
+            uint8 Reason    = 0;
             uint8 CastID    = 0;
         };
 
@@ -587,6 +587,17 @@ namespace WorldPackets
 
             uint32 SpellID = 0;
             uint8 CastID = 0;
+        };
+
+        class OpenItem final : public ClientPacket
+        {
+        public:
+            OpenItem(WorldPacket&& packet) : ClientPacket(CMSG_OPEN_ITEM, std::move(packet)) { }
+
+            void Read() override;
+
+            uint8 Slot = 0;
+            uint8 PackSlot = 0;
         };
     }
 }
